@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20240611093810"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "room",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Session",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "speaker",
+      "otherEntityRelationshipName": "session",
+      "relationshipName": "speaker",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "conference",
+      "otherEntityRelationshipName": "session",
+      "relationshipName": "conference",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "attendee",
+      "otherEntityRelationshipName": "session",
+      "relationshipName": "attendee",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

@@ -1,0 +1,116 @@
+<div>
+  <h2 id="page-heading" data-cy="SpeakerHeading">
+    <span jhiTranslate="gotoApp.speaker.home.title">Speakers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="gotoApp.speaker.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-speaker"
+        [routerLink]="['/speaker/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gotoApp.speaker.home.createLabel">Create a new Speaker</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (speakers?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="gotoApp.speaker.home.notFound">No Speakers found</span>
+    </div>
+  }
+
+  @if (speakers && speakers.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="fullName">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.speaker.fullName">Full Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="email">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.speaker.email">Email</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="company">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.speaker.company">Company</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="conference.title">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.speaker.conference">Conference</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (speaker of speakers; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/speaker', speaker.id, 'view']">{{ speaker.id }}</a>
+              </td>
+              <td>{{ speaker.fullName }}</td>
+              <td>{{ speaker.email }}</td>
+              <td>{{ speaker.company }}</td>
+              <td>
+                @for (conference of speaker.conferences; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/conference', conference.id, 'view']">{{ conference.title }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/speaker', speaker.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/speaker', speaker.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(speaker)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

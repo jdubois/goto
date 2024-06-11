@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (attendee()) {
+      <div>
+        <h2 data-cy="attendeeDetailsHeading"><span jhiTranslate="gotoApp.attendee.detail.title">Attendee</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ attendee()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.attendee.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ attendee()!.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.attendee.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ attendee()!.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.attendee.email">Email</span></dt>
+          <dd>
+            <span>{{ attendee()!.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.attendee.telephone">Telephone</span></dt>
+          <dd>
+            <span>{{ attendee()!.telephone }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.attendee.session">Session</span></dt>
+          <dd>
+            @for (session of attendee()!.sessions; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/session', session.id, 'view']">{{ session?.title }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/attendee', attendee()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

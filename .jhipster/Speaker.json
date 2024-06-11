@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20240611093808"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "fullName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "company",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Speaker",
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "session",
+      "otherEntityRelationshipName": "speaker",
+      "relationshipName": "session",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "conference",
+      "otherEntityRelationshipName": "speaker",
+      "relationshipName": "conference",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

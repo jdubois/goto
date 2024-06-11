@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-session-heading" data-cy="SessionCreateUpdateHeading" jhiTranslate="gotoApp.session.home.createOrEditLabel">
+        Create or edit a Session
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="gotoApp.session.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_title" jhiTranslate="gotoApp.session.title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+          @if (editForm.get('title')!.invalid && (editForm.get('title')!.dirty || editForm.get('title')!.touched)) {
+            <div>
+              @if (editForm.get('title')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_description" jhiTranslate="gotoApp.session.description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_room" jhiTranslate="gotoApp.session.room">Room</label>
+          <input type="text" class="form-control" name="room" id="field_room" data-cy="room" formControlName="room" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_speaker" jhiTranslate="gotoApp.session.speaker">Speaker</label>
+          <select
+            class="form-control"
+            id="field_speaker"
+            data-cy="speaker"
+            name="speaker"
+            formControlName="speaker"
+            [compareWith]="compareSpeaker"
+          >
+            <option [ngValue]="null"></option>
+            @for (speakerOption of speakersSharedCollection; track $index) {
+              <option [ngValue]="speakerOption">{{ speakerOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_conference" jhiTranslate="gotoApp.session.conference">Conference</label>
+          <select
+            class="form-control"
+            id="field_conference"
+            data-cy="conference"
+            name="conference"
+            formControlName="conference"
+            [compareWith]="compareConference"
+          >
+            <option [ngValue]="null"></option>
+            @for (conferenceOption of conferencesSharedCollection; track $index) {
+              <option [ngValue]="conferenceOption">{{ conferenceOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="field_attendees" jhiTranslate="gotoApp.session.attendee">Attendee</label>
+          <select
+            class="form-control"
+            id="field_attendees"
+            data-cy="attendee"
+            multiple
+            name="attendees"
+            formControlName="attendees"
+            [compareWith]="compareAttendee"
+          >
+            @for (attendeeOption of attendeesSharedCollection; track $index) {
+              <option [ngValue]="attendeeOption">{{ attendeeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

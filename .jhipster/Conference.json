@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "changelogDate": "20240611093807"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "palce",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Conference",
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "session",
+      "otherEntityRelationshipName": "conference",
+      "relationshipName": "session",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "speaker",
+      "otherEntityRelationshipName": "conference",
+      "relationshipName": "speaker",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}
