@@ -1,0 +1,39 @@
+entity Conference {
+    title String required,
+    description String,
+    date LocalDate,
+    palce String
+}
+
+entity Speaker {
+    fullName String,
+    email String,
+    company String
+}
+
+entity Attendee {
+	firstName String,
+    lastName String,
+    email String,
+    telephone String
+}
+
+paginate Attendee with pagination
+
+entity Session {
+	title String required,
+    description String,
+    room String
+}
+
+paginate Session with pagination
+
+relationship ManyToMany {
+    Attendee{session(title)} to Session{attendee}
+    Speaker{conference(title)} to Conference{speaker}
+}
+
+relationship OneToMany {
+    Speaker{session(title)} to Session{speaker},
+    Conference{session(title)} to Session{conference}
+}
