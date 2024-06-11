@@ -1,0 +1,124 @@
+<div>
+  <h2 id="page-heading" data-cy="ConferenceHeading">
+    <span jhiTranslate="gotoApp.conference.home.title">Conferences</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="gotoApp.conference.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-conference"
+        [routerLink]="['/conference/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gotoApp.conference.home.createLabel">Create a new Conference</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (conferences?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="gotoApp.conference.home.notFound">No Conferences found</span>
+    </div>
+  }
+
+  @if (conferences && conferences.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="title">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.conference.title">Title</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.conference.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="date">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.conference.date">Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="palce">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.conference.palce">Palce</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="speaker.id">
+              <div class="d-flex">
+                <span jhiTranslate="gotoApp.conference.speaker">Speaker</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (conference of conferences; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/conference', conference.id, 'view']">{{ conference.id }}</a>
+              </td>
+              <td>{{ conference.title }}</td>
+              <td>{{ conference.description }}</td>
+              <td>{{ conference.date | formatMediumDate }}</td>
+              <td>{{ conference.palce }}</td>
+              <td>
+                @for (speaker of conference.speakers; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/speaker', speaker.id, 'view']">{{ speaker.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/conference', conference.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/conference', conference.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(conference)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

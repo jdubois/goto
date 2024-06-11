@@ -1,0 +1,28 @@
+{
+  "gotoApp": {
+    "attendee": {
+      "home": {
+        "title": "Attendees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Attendee",
+        "createOrEditLabel": "Create or edit a Attendee",
+        "notFound": "No Attendees found"
+      },
+      "created": "A new Attendee is created with identifier {{ param }}",
+      "updated": "A Attendee is updated with identifier {{ param }}",
+      "deleted": "A Attendee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Attendee {{ id }}?"
+      },
+      "detail": {
+        "title": "Attendee"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "telephone": "Telephone",
+      "session": "Session"
+    }
+  }
+}

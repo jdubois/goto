@@ -1,0 +1,37 @@
+{
+  "annotations": {
+    "changelogDate": "20240611093809"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Attendee",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "session",
+      "otherEntityRelationshipName": "attendee",
+      "relationshipName": "session",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

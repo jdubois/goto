@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (session()) {
+      <div>
+        <h2 data-cy="sessionDetailsHeading"><span jhiTranslate="gotoApp.session.detail.title">Session</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ session()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.session.title">Title</span></dt>
+          <dd>
+            <span>{{ session()!.title }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.session.description">Description</span></dt>
+          <dd>
+            <span>{{ session()!.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.session.room">Room</span></dt>
+          <dd>
+            <span>{{ session()!.room }}</span>
+          </dd>
+          <dt><span jhiTranslate="gotoApp.session.speaker">Speaker</span></dt>
+          <dd>
+            @if (session()!.speaker) {
+              <div>
+                <a [routerLink]="['/speaker', session()!.speaker?.id, 'view']">{{ session()!.speaker?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="gotoApp.session.conference">Conference</span></dt>
+          <dd>
+            @if (session()!.conference) {
+              <div>
+                <a [routerLink]="['/conference', session()!.conference?.id, 'view']">{{ session()!.conference?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="gotoApp.session.attendee">Attendee</span></dt>
+          <dd>
+            @for (attendee of session()!.attendees; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/attendee', attendee.id, 'view']">{{ attendee?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/session', session()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
